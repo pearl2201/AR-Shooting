@@ -126,5 +126,10 @@ namespace Fruit
             gameState = GAMESTATE.END;
             gameoverPopup.gameObject.SetActive(true);
         }
+
+        public void UpdateTextHp(int hp)
+        {
+            txtHp.text = "HP: " + hp;
+        }
     }
 }

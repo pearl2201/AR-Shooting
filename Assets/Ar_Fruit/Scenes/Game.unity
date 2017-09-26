@@ -4236,7 +4236,7 @@ MonoBehaviour:
   arPlaneMarginDetect: {fileID: 1308259102}
   worldLand: {fileID: 1890776531}
   txtHp: {fileID: 537782224}
-  gameoverPopup: {fileID: 0}
+  gameoverPopup: {fileID: 2011497502}
   slider: {fileID: 640390384}
   txtStartRound: {fileID: 1011251881}
 --- !u!4 &177975354

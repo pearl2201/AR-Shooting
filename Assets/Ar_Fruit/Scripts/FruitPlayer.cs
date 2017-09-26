@@ -33,6 +33,7 @@ namespace Fruit
         void Start()
         {
             hpPlayer = Constants.DEFAULT_HP_PLAYER;
+            gamemanager.UpdateTextHp(hpPlayer);
         }
 
         // Update is called once per frame
