@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408ac564749d06543aa36c76d6a0ba03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSize: 20
+  MaxSize: 5
   AnimationSpd: 0.1
 --- !u!114 &11400010
 MonoBehaviour:

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Reflection;
 
 // Cartoon FX Easy Editor
-// (c) 2013, 2014 - Jean Moreno
+// (c) 2013,2014 - Jean Moreno
 
 public class CFXEasyEditor : EditorWindow
 {
@@ -1247,6 +1247,11 @@ public class CFXEasyEditor : EditorWindow
 			//(ShapeModule.type 6 == Mesh)
 			if(psSerial.FindProperty("ShapeModule.type").intValue == 6)
 			{
+#if !UNITY_3_5
+				//Unity 4+ : changing the Transform scale will affect the shape Mesh
+				ps.transform.localScale = ps.transform.localScale * ScalingValue;
+				EditorUtility.SetDirty(ps);
+#else
 				Object obj = psSerial.FindProperty("ShapeModule.m_Mesh").objectReferenceValue;
 				if(obj != null)
 				{
@@ -1318,6 +1323,7 @@ public class CFXEasyEditor : EditorWindow
 					//Apply new Mesh
 					psSerial.FindProperty("ShapeModule.m_Mesh").objectReferenceValue = meshToUse;
 				}
+#endif
 			}
 		}
 		

@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 4716976295647220}
   - component: {fileID: 205723094826513550}
   - component: {fileID: 65187005395840032}
+  - component: {fileID: 114466478924425132}
+  - component: {fileID: 54585491925758220}
   m_Layer: 0
   m_Name: Strawberry
   m_TagString: Untagged
@@ -83,7 +85,7 @@ Transform:
   m_GameObject: {fileID: 1185208914865696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 4241051025841366}
   - {fileID: 4867416809273404}
@@ -183,6 +185,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1657129758883512}
   m_Mesh: {fileID: 4300000, guid: 8ba740056308be44fb3c1a070b3227c4, type: 3}
+--- !u!54 &54585491925758220
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1185208914865696}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65187005395840032
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -195,6 +212,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03904283, y: 0.031785566, z: 0.033993937}
   m_Center: {x: -0.0003099749, y: 0.015591888, z: 0.0016449606}
+--- !u!114 &114466478924425132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1185208914865696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3858016aba7ca1948ad1a37ba21daefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMoving: {x: 0, y: 0, z: 0}
+  speed: {x: 0, y: 0, z: 0}
+  damage: 1
+  isHitPlayer: 0
+  isStartRemove: 0
+  particleExplo: {fileID: 149112, guid: f5b77c746935adf4f86787cdb5139c31, type: 2}
 --- !u!205 &205723094826513550
 LODGroup:
   m_ObjectHideFlags: 1

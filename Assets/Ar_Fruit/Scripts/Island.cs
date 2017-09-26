@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using System.Collections;
 using Random = UnityEngine.Random;
+using RavingBots.CartoonExplosion;
 namespace Fruit
 {
     public class Island : MonoBehaviour
@@ -18,7 +19,7 @@ namespace Fruit
         }
 
         public GameObject gun;
-
+        public CartoonExplosionFX explo;
         public Transform headGun;
         [HideInInspector]
         public List<EnemyFruitBullet> bulletModels;
@@ -30,10 +31,15 @@ namespace Fruit
         public ISLAND_STATE state;
         [HideInInspector]
         public Camera cam;
+        [HideInInspector]
+        public int idIsland;
 
-        public void Setup(Camera cam, List<EnemyFruitBullet> bulletModels)
+
+        public float percentCooldown = 1f;
+        public void Setup(Camera cam, List<EnemyFruitBullet> bulletModels, int id, int totalLand)
         {
             this.cam = cam;
+            percentCooldown = (float)(totalLand - id) / totalLand;
             this.bulletModels = bulletModels;
             cooldownShooting = Constants.SPEED_SHOOTING + Random.Range(0f, 1f) * Constants.SPEED_SHOOTING;
         }
@@ -70,7 +76,8 @@ namespace Fruit
                     int typeBullet = Random.Range(0, bulletModels.Count);
                     GameObject bulletGo = Instantiate(bulletModels[typeBullet].gameObject, headGun.transform.position, Quaternion.identity);
                     EnemyFruitBullet bulletScript = bulletGo.GetComponent<EnemyFruitBullet>();
-                    bulletScript.Setup(cam.transform.position, 1);
+                    bulletScript.Setup(cam, cam.transform.position, 1);
+                    explo.Play();
                 }
             }
 
@@ -84,7 +91,7 @@ namespace Fruit
         public void ActiveGun()
         {
             state = ISLAND_STATE.ACTIVE;
-            deltatimeUpdateShooting = cooldownShooting * 0.75f;
+            deltatimeUpdateShooting = cooldownShooting * percentCooldown;
         }
 
         public void PrepareGun()

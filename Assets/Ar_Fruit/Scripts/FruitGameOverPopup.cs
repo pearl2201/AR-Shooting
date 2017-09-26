@@ -7,5 +7,10 @@ namespace Fruit
 {
     public class FruitGameOverPopup : MonoBehaviour
     {
+
+        public void Restart()
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
 }

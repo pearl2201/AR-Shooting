@@ -20,6 +20,10 @@ namespace Fruit
         [HideInInspector]
         public bool isStartRemove;
 
+        private Camera cam;
+        [SerializeField]
+        private GameObject particleExplo;
+
         private void OnEnable()
         {
             this.RegisterListener(EventID.OnOverRound, (sender, param) => Remmove());
@@ -27,17 +31,18 @@ namespace Fruit
 
 
 
-        public void Setup(Vector3 destAttack, int damage)
+        public void Setup(Camera cam,Vector3 destAttack, int damage)
         {
+            this.cam = cam;
             this.targetMoving = destAttack;
             float distanceXZ = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(destAttack.x, destAttack.z));
             float timeBulletMove = distanceXZ / Constants.DEFAULT_SPEED_XZ;
-            Debug.Log("time bullet: " + timeBulletMove);
+            
             speed = Vector3.zero;
             speed.x = (destAttack.x - transform.position.x) / timeBulletMove;
             speed.z = (destAttack.z - transform.position.z) / timeBulletMove;
-            speed.y = (destAttack.y - transform.position.y - 0.1f - 0.5f * Constants.GRAVITY_FRUIT_BULLET * timeBulletMove * timeBulletMove) / timeBulletMove;
-            Debug.Log("speed setup: " + speed.ToString());
+            speed.y = (destAttack.y - transform.position.y - 0.05f - 0.5f * Constants.GRAVITY_FRUIT_BULLET * timeBulletMove * timeBulletMove) / timeBulletMove;
+
             isHitPlayer = false;
             isStartRemove = false;
         }
@@ -49,6 +54,8 @@ namespace Fruit
                 // Update XZ,
                 speed.y = speed.y + Constants.GRAVITY_FRUIT_BULLET * Time.deltaTime;
                 transform.position += speed * Time.deltaTime;
+                Vector3 axis = cam.transform.right;
+                transform.RotateAroundLocal(axis, Constants.DEFAULT_SPEED_ROTATE * Time.deltaTime);
                 // Update Y
                 if (transform.position.y < -5f)
                 {
@@ -58,18 +65,21 @@ namespace Fruit
 
         }
 
-        private void OnTriggerEnter(Collider other)
+
+        void OnCollisionEnter(Collision collision)
         {
 
             if (!isStartRemove)
             {
-                if (other.gameObject.tag == "Player")
+                if (collision.gameObject.tag == "Player")
                 {
+                  
                     isHitPlayer = true;
                     isStartRemove = true;
-                    StartCoroutine(IERemove());
-                    FruitPlayer player = other.gameObject.GetComponent<FruitPlayer>();
+                    Explo();
+                    FruitPlayer player = collision.gameObject.GetComponent<FruitPlayer>();
                     player.TakeDamage(transform.position, damage);
+                    StartCoroutine(IERemove());
                 }
 
             }
@@ -104,8 +114,16 @@ namespace Fruit
             if (!isStartRemove)
             {
                 isStartRemove = true;
+                Explo();
                 StartCoroutine(IERemove());
             }
+
+        }
+
+        public void Explo()
+        {
+            GameObject go = Instantiate(particleExplo);
+            go.transform.position = transform.position;
 
         }
 

@@ -12,6 +12,7 @@ namespace Fruit
         public static float TIME_REMOVE_ENEMY = 0.2f;
 
         public static float DEFAULT_SPEED_XZ = 5f;
+        public static float DEFAULT_SPEED_ROTATE = 5f;
 
         public static float TIME_PER_ROUND = 30f;
 

@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 4500992101057662}
   - component: {fileID: 205311570820586502}
   - component: {fileID: 65753503225030844}
+  - component: {fileID: 114225834969901980}
+  - component: {fileID: 54437195978889990}
   m_Layer: 0
   m_Name: Kiwi
   m_TagString: Untagged
@@ -70,7 +72,7 @@ Transform:
   m_GameObject: {fileID: 1605173834165514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4566584396315250}
   - {fileID: 4546289927944300}
@@ -181,6 +183,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883594955914448}
   m_Mesh: {fileID: 4300002, guid: 39a2fbf0a9fbe674d84bfea491bcb37c, type: 3}
+--- !u!54 &54437195978889990
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1605173834165514}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65753503225030844
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -193,6 +210,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.052674174, y: 0.047236618, z: 0.06999999}
   m_Center: {x: 0.000042781234, y: 0.023618309, z: -0.00024713762}
+--- !u!114 &114225834969901980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1605173834165514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3858016aba7ca1948ad1a37ba21daefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMoving: {x: 0, y: 0, z: 0}
+  speed: {x: 0, y: 0, z: 0}
+  damage: 1
+  isHitPlayer: 0
+  isStartRemove: 0
+  particleExplo: {fileID: 186478, guid: 771a0c841d2e74748a82a7ee2cc86865, type: 2}
 --- !u!205 &205311570820586502
 LODGroup:
   m_ObjectHideFlags: 1

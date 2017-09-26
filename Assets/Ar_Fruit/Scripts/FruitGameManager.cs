@@ -44,6 +44,7 @@ namespace Fruit
         [SerializeField]
         private Text txtStartRound;
 
+        private GameObject btnShooting;
         private void Start()
         {
             gameState = GAMESTATE.CHECK_PLANE;
@@ -59,6 +60,7 @@ namespace Fruit
             gameState = GAMESTATE.INIT;
             txtRequirePlane.gameObject.SetActive(false);
             // arPlaneMarginDetect.gameObject.SetActive(false);
+            btnShooting.gameObject.SetActive(true);
             worldLand.gameObject.SetActive(true);
             worldLand.transform.position = positionInitWorld;
             worldLand.Setup();
