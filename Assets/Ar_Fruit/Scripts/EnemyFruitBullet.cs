@@ -4,13 +4,14 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Dinosaur.Scripts;
 namespace Fruit
 {
     public class EnemyFruitBullet : MonoBehaviour
     {
         [HideInInspector]
         public Vector3 targetMoving;
-        [HideInInspector]
+        //[HideInInspector]
         public Vector3 speed;
 
         public int damage;
@@ -19,17 +20,26 @@ namespace Fruit
         [HideInInspector]
         public bool isStartRemove;
 
+        private void OnEnable()
+        {
+            this.RegisterListener(EventID.OnOverRound, (sender, param) => Remmove());
+        }
+
+
+
         public void Setup(Vector3 destAttack, int damage)
         {
             this.targetMoving = destAttack;
             float distanceXZ = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(destAttack.x, destAttack.z));
             float timeBulletMove = distanceXZ / Constants.DEFAULT_SPEED_XZ;
+            Debug.Log("time bullet: " + timeBulletMove);
             speed = Vector3.zero;
             speed.x = (destAttack.x - transform.position.x) / timeBulletMove;
             speed.z = (destAttack.z - transform.position.z) / timeBulletMove;
-            speed.y = (destAttack.y - transform.position.y - 0.5f * Constants.GRAVITY_FRUIT_BULLET * timeBulletMove * timeBulletMove) / timeBulletMove;
-
-            isHitPlayer = true;
+            speed.y = (destAttack.y - transform.position.y - 0.1f - 0.5f * Constants.GRAVITY_FRUIT_BULLET * timeBulletMove * timeBulletMove) / timeBulletMove;
+            Debug.Log("speed setup: " + speed.ToString());
+            isHitPlayer = false;
+            isStartRemove = false;
         }
 
         public void Update()
@@ -48,18 +58,18 @@ namespace Fruit
 
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
 
             if (!isStartRemove)
             {
-                if (collision.gameObject.tag == "Player")
+                if (other.gameObject.tag == "Player")
                 {
                     isHitPlayer = true;
                     isStartRemove = true;
                     StartCoroutine(IERemove());
-                    FruitPlayer player = collision.gameObject.GetComponent<FruitPlayer>();
-                    player.TakeDamage(collision.contacts[0].point, damage);
+                    FruitPlayer player = other.gameObject.GetComponent<FruitPlayer>();
+                    player.TakeDamage(transform.position, damage);
                 }
 
             }
@@ -77,6 +87,15 @@ namespace Fruit
                 yield return null;
             }
             Destroy(gameObject);
+
+        }
+
+        public void Remmove()
+        {
+            if (!isStartRemove)
+            {
+                StartCoroutine(IERemove());
+            }
 
         }
 

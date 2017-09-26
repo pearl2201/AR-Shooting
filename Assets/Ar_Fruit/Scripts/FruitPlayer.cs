@@ -59,8 +59,10 @@ namespace Fruit
                     //laserLine.SetPosition (0, gunEnd.position);
                     Vector3 pointShooting = new Vector3(0, 0, 0);
                     bool hitGo = false;
+                    var layerMask = (1 << 8);
+                    layerMask = ~layerMask;
                     // Check if our raycast has hit anything
-                    if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit))
+                    if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, Mathf.Infinity, layerMask))
                     {
                         // Set the end position for our laser line 
                         //laserLine.SetPosition (1, hit.point);

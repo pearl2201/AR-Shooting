@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4363237636902530}
   - component: {fileID: 205958248469684906}
   - component: {fileID: 65704660665863616}
+  - component: {fileID: 114394145037452972}
   m_Layer: 0
   m_Name: Apple
   m_TagString: Untagged
@@ -81,9 +82,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209183290363642}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.063, y: 0, z: 0.02}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4057776869579694}
   - {fileID: 4426556482111684}
@@ -188,11 +189,27 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209183290363642}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.09203893, y: 0.10557197, z: 0.093840025}
   m_Center: {x: 0.00030497648, y: 0.05283799, z: 0.000054053962}
+--- !u!114 &114394145037452972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209183290363642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3858016aba7ca1948ad1a37ba21daefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMoving: {x: 0, y: 0, z: 0}
+  speed: {x: 0, y: 0, z: 0}
+  damage: 1
+  isHitPlayer: 0
+  isStartRemove: 0
 --- !u!205 &205958248469684906
 LODGroup:
   m_ObjectHideFlags: 1

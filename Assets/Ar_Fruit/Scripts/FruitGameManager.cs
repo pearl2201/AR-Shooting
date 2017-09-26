@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Dinosaur.Scripts;
 namespace Fruit
 {
     public class FruitGameManager : MonoBehaviour
@@ -19,12 +20,14 @@ namespace Fruit
             PLAYING,
             END
         }
+        [HideInInspector]
         public GAMESTATE gameState;
-
+        [HideInInspector]
         public int indexRound;
 
+        public Camera cam;
         private float cooldownRound;
-     
+
         public List<EnemyFruitBullet> bulletModels;
         [SerializeField]
         private GameObject txtRequirePlane;
@@ -37,14 +40,17 @@ namespace Fruit
         [SerializeField]
         private FruitGameOverPopup gameoverPopup;
         [SerializeField]
-        private Scrollbar scrollBar;
+        private Slider slider;
         [SerializeField]
         private Text txtStartRound;
 
         private void Start()
         {
             gameState = GAMESTATE.CHECK_PLANE;
-
+            if (Application.isEditor)
+            {
+                StartGame(new Vector3(0, -7.3f, 22.5f));
+            }
         }
 
 
@@ -52,9 +58,10 @@ namespace Fruit
         {
             gameState = GAMESTATE.INIT;
             txtRequirePlane.gameObject.SetActive(false);
-            arPlaneMarginDetect.gameObject.SetActive(false);
+            // arPlaneMarginDetect.gameObject.SetActive(false);
             worldLand.gameObject.SetActive(true);
             worldLand.transform.position = positionInitWorld;
+            worldLand.Setup();
             SetupRound(0);
         }
 
@@ -62,19 +69,24 @@ namespace Fruit
         {
             if (gameState == GAMESTATE.PLAYING)
             {
-                cooldownRound -= Time.deltaTime;
-                scrollBar.value = cooldownRound / Constants.TIME_PER_ROUND;
-                if (cooldownRound <= 0)
+                if (indexRound <= 3)
                 {
-                    NextRound();
+                    cooldownRound -= Time.deltaTime;
+                    slider.value = cooldownRound / Constants.TIME_PER_ROUND;
+                    if (cooldownRound <= 0)
+                    {
+                        NextRound();
+                    }
                 }
+
             }
 
         }
 
         public void NextRound()
         {
-
+            worldLand.PauseIsland();
+            EventDispatcher.Instance.PostEvent(EventID.OnOverRound);
             SetupRound(indexRound + 1);
         }
 
@@ -89,8 +101,8 @@ namespace Fruit
         IEnumerator IESetupRound()
         {
             txtStartRound.gameObject.SetActive(true);
-            txtStartRound.text = "Round " + indexRound;
-            float oldScrollBarValue = scrollBar.value;
+            txtStartRound.text = "Round " + (indexRound + 1);
+            float oldScrollBarValue = slider.value;
             worldLand.SetNextRound();
             float p = 0;
             while (p < 1)
@@ -98,12 +110,13 @@ namespace Fruit
 
                 p += Time.deltaTime / Constants.TIME_SETUP_ROUND;
                 p = Mathf.Clamp01(p);
-                scrollBar.value = Mathf.Lerp(oldScrollBarValue, 1, p);
-                worldLand.UpdateNextRoundScale(p);
+                slider.value = Mathf.Lerp(oldScrollBarValue, 1, p);
+
                 yield return null;
             }
             txtStartRound.gameObject.SetActive(false);
             gameState = GAMESTATE.PLAYING;
+            worldLand.UnPauseIsland();
         }
 
         public void GameOver()

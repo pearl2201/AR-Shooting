@@ -6,5 +6,6 @@
     OnFadeMusic,
     OnPaused,
     OnUnPaused,
+    OnOverRound,
 	OnPurchaseComplete
 }

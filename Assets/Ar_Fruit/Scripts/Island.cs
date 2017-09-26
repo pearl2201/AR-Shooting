@@ -31,11 +31,23 @@ namespace Fruit
         [HideInInspector]
         public Camera cam;
 
-        void Setup(Camera cam, List<EnemyFruitBullet> bulletModels)
+        public void Setup(Camera cam, List<EnemyFruitBullet> bulletModels)
         {
             this.cam = cam;
             this.bulletModels = bulletModels;
-            deltatimeUpdateShooting = Constants.SPEED_SHOOTING + Random.Range(0f, 1f) * Constants.SPEED_SHOOTING;
+            cooldownShooting = Constants.SPEED_SHOOTING + Random.Range(0f, 1f) * Constants.SPEED_SHOOTING;
+        }
+
+        public void SetupDirGun()
+        {
+            Quaternion startAngle = transform.rotation;
+            Vector3 dir = (cam.transform.position - gun.transform.position).normalized;
+            var rotation = Quaternion.LookRotation(dir);
+            var eulerAngle = Quaternion.ToEulerAngles(rotation);
+            eulerAngle.z = 0;
+            eulerAngle.y = eulerAngle.y * Mathf.Rad2Deg;
+            eulerAngle.x = 0;
+            gun.transform.localEulerAngles = eulerAngle;
         }
 
         public void Update()
@@ -72,6 +84,7 @@ namespace Fruit
         public void ActiveGun()
         {
             state = ISLAND_STATE.ACTIVE;
+            deltatimeUpdateShooting = cooldownShooting * 0.75f;
         }
 
         public void PrepareGun()
